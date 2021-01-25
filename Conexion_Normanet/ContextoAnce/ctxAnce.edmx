@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NormanetRestrucModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2006/04/edm/ssdl">
+        <EntityType Name="C_Comites">
+          <Key>
+            <PropertyRef Name="IdComite" />
+          </Key>
+          <Property Name="IdComite" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Comite" Type="varchar" MaxLength="600" Nullable="false" />
+          <Property Name="Alcance" Type="varchar(max)" />
+          <Property Name="IdUsuarioResponsable" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Objetivo" Type="varchar" MaxLength="600" />
+          <Property Name="FechaAlta" Type="datetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="C_ComitesTecnicos">
+          <Key>
+            <PropertyRef Name="IdComiteTecnico" />
+          </Key>
+          <Property Name="IdComiteTecnico" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdComite" Type="int" Nullable="false" />
+          <Property Name="ComiteTecnico" Type="varchar" MaxLength="600" Nullable="false" />
+          <Property Name="IdUsuarioResponsable" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Objetivo" Type="varchar" MaxLength="600" />
+          <Property Name="FechaAlta" Type="datetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="C_GruposTrabajo">
+          <Key>
+            <PropertyRef Name="IdGrupoTrabajo" />
+          </Key>
+          <Property Name="IdGrupoTrabajo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdComite" Type="int" />
+          <Property Name="IdComiteTecnico" Type="int" />
+          <Property Name="IdSubComite" Type="int" />
+          <Property Name="GrupoTrabajo" Type="varchar" MaxLength="600" Nullable="false" />
+          <Property Name="IdUsuarioResponsable" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Objetivo" Type="varchar" MaxLength="600" />
+          <Property Name="FechaAlta" Type="datetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="C_SubComites">
+          <Key>
+            <PropertyRef Name="IdSubComite" />
+          </Key>
+          <Property Name="IdSubComite" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdComiteTecnico" Type="int" Nullable="false" />
+          <Property Name="SubComite" Type="varchar" MaxLength="600" Nullable="false" />
+          <Property Name="IdUsuarioResponsable" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Objetivo" Type="varchar" MaxLength="600" />
+          <Property Name="FechaAlta" Type="datetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__C_Comites__Activ__70DDC3D8">
+          <End Role="C_Comites" Type="Self.C_Comites" Multiplicity="1" />
+          <End Role="C_ComitesTecnicos" Type="Self.C_ComitesTecnicos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_Comites">
+              <PropertyRef Name="IdComite" />
+            </Principal>
+            <Dependent Role="C_ComitesTecnicos">
+              <PropertyRef Name="IdComite" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__C_GruposT__Activ__7A672E12">
+          <End Role="C_Comites" Type="Self.C_Comites" Multiplicity="0..1" />
+          <End Role="C_GruposTrabajo" Type="Self.C_GruposTrabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_Comites">
+              <PropertyRef Name="IdComite" />
+            </Principal>
+            <Dependent Role="C_GruposTrabajo">
+              <PropertyRef Name="IdComite" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__C_GruposT__IdCom__7B5B524B">
+          <End Role="C_ComitesTecnicos" Type="Self.C_ComitesTecnicos" Multiplicity="0..1" />
+          <End Role="C_GruposTrabajo" Type="Self.C_GruposTrabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_ComitesTecnicos">
+              <PropertyRef Name="IdComiteTecnico" />
+            </Principal>
+            <Dependent Role="C_GruposTrabajo">
+              <PropertyRef Name="IdComiteTecnico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__C_GruposT__IdSub__7C4F7684">
+          <End Role="C_SubComites" Type="Self.C_SubComites" Multiplicity="0..1" />
+          <End Role="C_GruposTrabajo" Type="Self.C_GruposTrabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_SubComites">
+              <PropertyRef Name="IdSubComite" />
+            </Principal>
+            <Dependent Role="C_GruposTrabajo">
+              <PropertyRef Name="IdSubComite" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__C_SubComi__Activ__75A278F5">
+          <End Role="C_ComitesTecnicos" Type="Self.C_ComitesTecnicos" Multiplicity="1" />
+          <End Role="C_SubComites" Type="Self.C_SubComites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_ComitesTecnicos">
+              <PropertyRef Name="IdComiteTecnico" />
+            </Principal>
+            <Dependent Role="C_SubComites">
+              <PropertyRef Name="IdComiteTecnico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="uspComites" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BANDERA" Type="nvarchar" Mode="In" />
+          <Parameter Name="idcomite" Type="int" Mode="In" />
+          <Parameter Name="idcomitetecnico" Type="int" Mode="In" />
+          <Parameter Name="IdSubComite" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="NormanetRestrucModelStoreContainer">
+          <EntitySet Name="C_Comites" EntityType="Self.C_Comites" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="C_ComitesTecnicos" EntityType="Self.C_ComitesTecnicos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="C_GruposTrabajo" EntityType="Self.C_GruposTrabajo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="C_SubComites" EntityType="Self.C_SubComites" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__C_Comites__Activ__70DDC3D8" Association="Self.FK__C_Comites__Activ__70DDC3D8">
+            <End Role="C_Comites" EntitySet="C_Comites" />
+            <End Role="C_ComitesTecnicos" EntitySet="C_ComitesTecnicos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__C_GruposT__Activ__7A672E12" Association="Self.FK__C_GruposT__Activ__7A672E12">
+            <End Role="C_Comites" EntitySet="C_Comites" />
+            <End Role="C_GruposTrabajo" EntitySet="C_GruposTrabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__C_GruposT__IdCom__7B5B524B" Association="Self.FK__C_GruposT__IdCom__7B5B524B">
+            <End Role="C_ComitesTecnicos" EntitySet="C_ComitesTecnicos" />
+            <End Role="C_GruposTrabajo" EntitySet="C_GruposTrabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__C_GruposT__IdSub__7C4F7684" Association="Self.FK__C_GruposT__IdSub__7C4F7684">
+            <End Role="C_SubComites" EntitySet="C_SubComites" />
+            <End Role="C_GruposTrabajo" EntitySet="C_GruposTrabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__C_SubComi__Activ__75A278F5" Association="Self.FK__C_SubComi__Activ__75A278F5">
+            <End Role="C_ComitesTecnicos" EntitySet="C_ComitesTecnicos" />
+            <End Role="C_SubComites" EntitySet="C_SubComites" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NormanetRestrucModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2006/04/edm">
+        <EntityType Name="C_Comites">
+          <Key>
+            <PropertyRef Name="IdComite" />
+          </Key>
+          <Property Name="IdComite" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Comite" Type="String" MaxLength="600" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Alcance" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioResponsable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Objetivo" Type="String" MaxLength="600" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAlta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C_ComitesTecnicos" Relationship="NormanetRestrucModel.FK__C_Comites__Activ__70DDC3D8" FromRole="C_Comites" ToRole="C_ComitesTecnicos" />
+          <NavigationProperty Name="C_GruposTrabajo" Relationship="NormanetRestrucModel.FK__C_GruposT__Activ__7A672E12" FromRole="C_Comites" ToRole="C_GruposTrabajo" />
+        </EntityType>
+        <EntityContainer Name="NormanetRestrucEntities">
+          <EntitySet Name="C_Comites" EntityType="Self.C_Comites" />
+          <FunctionImport Name="uspComites" EntitySet="C_Comites" ReturnType="Collection(NormanetRestrucModel.C_Comites)">
+          <Parameter Name="BANDERA" Mode="In" Type="String" />
+            <Parameter Name="idcomite" Mode="In" Type="Int32" />
+            <Parameter Name="idcomitetecnico" Mode="In" Type="Int32" />
+            <Parameter Name="IdSubComite" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Get_comites" EntitySet="C_Comites" ReturnType="Collection(NormanetRestrucModel.C_Comites)">
+          <Parameter Name="BANDERA" Mode="In" Type="String" />
+            <Parameter Name="idcomite" Mode="In" Type="Int32" />
+            <Parameter Name="idcomitetecnico" Mode="In" Type="Int32" />
+            <Parameter Name="IdSubComite" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="C_ComitesTecnicos" EntityType="NormanetRestrucModel.C_ComitesTecnicos" />
+          <EntitySet Name="C_GruposTrabajo" EntityType="NormanetRestrucModel.C_GruposTrabajo" />
+          <EntitySet Name="C_SubComites" EntityType="NormanetRestrucModel.C_SubComites" />
+          <AssociationSet Name="FK__C_Comites__Activ__70DDC3D8" Association="NormanetRestrucModel.FK__C_Comites__Activ__70DDC3D8">
+            <End Role="C_Comites" EntitySet="C_Comites" />
+            <End Role="C_ComitesTecnicos" EntitySet="C_ComitesTecnicos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__C_GruposT__Activ__7A672E12" Association="NormanetRestrucModel.FK__C_GruposT__Activ__7A672E12">
+            <End Role="C_Comites" EntitySet="C_Comites" />
+            <End Role="C_GruposTrabajo" EntitySet="C_GruposTrabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__C_GruposT__IdCom__7B5B524B" Association="NormanetRestrucModel.FK__C_GruposT__IdCom__7B5B524B">
+            <End Role="C_ComitesTecnicos" EntitySet="C_ComitesTecnicos" />
+            <End Role="C_GruposTrabajo" EntitySet="C_GruposTrabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__C_SubComi__Activ__75A278F5" Association="NormanetRestrucModel.FK__C_SubComi__Activ__75A278F5">
+            <End Role="C_ComitesTecnicos" EntitySet="C_ComitesTecnicos" />
+            <End Role="C_SubComites" EntitySet="C_SubComites" />
+          </AssociationSet>
+          <AssociationSet Name="FK__C_GruposT__IdSub__7C4F7684" Association="NormanetRestrucModel.FK__C_GruposT__IdSub__7C4F7684">
+            <End Role="C_SubComites" EntitySet="C_SubComites" />
+            <End Role="C_GruposTrabajo" EntitySet="C_GruposTrabajo" />
+          </AssociationSet>
+          <FunctionImport Name="Get_Comites_Tecnicos" EntitySet="C_ComitesTecnicos" ReturnType="Collection(NormanetRestrucModel.C_ComitesTecnicos)">
+            <Parameter Name="BANDERA" Mode="In" Type="String" />
+            <Parameter Name="idcomite" Mode="In" Type="Int32" />
+            <Parameter Name="idcomitetecnico" Mode="In" Type="Int32" />
+            <Parameter Name="IdSubComite" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="C_ComitesTecnicos">
+          <Key>
+            <PropertyRef Name="IdComiteTecnico" />
+          </Key>
+          <Property Name="IdComiteTecnico" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ComiteTecnico" Type="String" Nullable="false" MaxLength="600" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioResponsable" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Objetivo" Type="String" MaxLength="600" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAlta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C_GruposTrabajo" Relationship="NormanetRestrucModel.FK__C_GruposT__IdCom__7B5B524B" FromRole="C_ComitesTecnicos" ToRole="C_GruposTrabajo" />
+          <NavigationProperty Name="C_SubComites" Relationship="NormanetRestrucModel.FK__C_SubComi__Activ__75A278F5" FromRole="C_ComitesTecnicos" ToRole="C_SubComites" />
+        </EntityType>
+        <EntityType Name="C_GruposTrabajo">
+          <Key>
+            <PropertyRef Name="IdGrupoTrabajo" />
+          </Key>
+          <Property Name="IdGrupoTrabajo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GrupoTrabajo" Type="String" Nullable="false" MaxLength="600" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioResponsable" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Objetivo" Type="String" MaxLength="600" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAlta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C_SubComites" Relationship="NormanetRestrucModel.FK__C_GruposT__IdSub__7C4F7684" FromRole="C_GruposTrabajo" ToRole="C_SubComites" />
+        </EntityType>
+        <EntityType Name="C_SubComites">
+          <Key>
+            <PropertyRef Name="IdSubComite" />
+          </Key>
+          <Property Name="IdSubComite" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubComite" Type="String" Nullable="false" MaxLength="600" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioResponsable" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Objetivo" Type="String" MaxLength="600" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAlta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__C_Comites__Activ__70DDC3D8">
+          <End Type="NormanetRestrucModel.C_Comites" Role="C_Comites" Multiplicity="1" />
+          <End Type="NormanetRestrucModel.C_ComitesTecnicos" Role="C_ComitesTecnicos" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__C_GruposT__Activ__7A672E12">
+          <End Type="NormanetRestrucModel.C_Comites" Role="C_Comites" Multiplicity="0..1" />
+          <End Type="NormanetRestrucModel.C_GruposTrabajo" Role="C_GruposTrabajo" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__C_GruposT__IdCom__7B5B524B">
+          <End Type="NormanetRestrucModel.C_ComitesTecnicos" Role="C_ComitesTecnicos" Multiplicity="0..1" />
+          <End Type="NormanetRestrucModel.C_GruposTrabajo" Role="C_GruposTrabajo" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__C_SubComi__Activ__75A278F5">
+          <End Type="NormanetRestrucModel.C_ComitesTecnicos" Role="C_ComitesTecnicos" Multiplicity="1" />
+          <End Type="NormanetRestrucModel.C_SubComites" Role="C_SubComites" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__C_GruposT__IdSub__7C4F7684">
+          <End Type="NormanetRestrucModel.C_SubComites" Role="C_SubComites" Multiplicity="0..1" />
+          <End Type="NormanetRestrucModel.C_GruposTrabajo" Role="C_GruposTrabajo" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="urn:schemas-microsoft-com:windows:storage:mapping:CS">
+        <EntityContainerMapping StorageEntityContainer="NormanetRestrucModelStoreContainer" CdmEntityContainer="NormanetRestrucEntities">
+          <EntitySetMapping Name="C_Comites">
+            <EntityTypeMapping TypeName="NormanetRestrucModel.C_Comites">
+              <MappingFragment StoreEntitySet="C_Comites">
+                <ScalarProperty Name="IdComite" ColumnName="IdComite" />
+                <ScalarProperty Name="Comite" ColumnName="Comite" />
+                <ScalarProperty Name="Alcance" ColumnName="Alcance" />
+                <ScalarProperty Name="IdUsuarioResponsable" ColumnName="IdUsuarioResponsable" />
+                <ScalarProperty Name="Objetivo" ColumnName="Objetivo" />
+                <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="uspComites" FunctionName="NormanetRestrucModel.Store.uspComites">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Get_comites" FunctionName="NormanetRestrucModel.Store.uspComites" />
+          <EntitySetMapping Name="C_ComitesTecnicos">
+            <EntityTypeMapping TypeName="NormanetRestrucModel.C_ComitesTecnicos">
+              <MappingFragment StoreEntitySet="C_ComitesTecnicos">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+                <ScalarProperty Name="Objetivo" ColumnName="Objetivo" />
+                <ScalarProperty Name="IdUsuarioResponsable" ColumnName="IdUsuarioResponsable" />
+                <ScalarProperty Name="ComiteTecnico" ColumnName="ComiteTecnico" />
+                <ScalarProperty Name="IdComiteTecnico" ColumnName="IdComiteTecnico" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C_GruposTrabajo">
+            <EntityTypeMapping TypeName="NormanetRestrucModel.C_GruposTrabajo">
+              <MappingFragment StoreEntitySet="C_GruposTrabajo">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+                <ScalarProperty Name="Objetivo" ColumnName="Objetivo" />
+                <ScalarProperty Name="IdUsuarioResponsable" ColumnName="IdUsuarioResponsable" />
+                <ScalarProperty Name="GrupoTrabajo" ColumnName="GrupoTrabajo" />
+                <ScalarProperty Name="IdGrupoTrabajo" ColumnName="IdGrupoTrabajo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C_SubComites">
+            <EntityTypeMapping TypeName="NormanetRestrucModel.C_SubComites">
+              <MappingFragment StoreEntitySet="C_SubComites">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+                <ScalarProperty Name="Objetivo" ColumnName="Objetivo" />
+                <ScalarProperty Name="IdUsuarioResponsable" ColumnName="IdUsuarioResponsable" />
+                <ScalarProperty Name="SubComite" ColumnName="SubComite" />
+                <ScalarProperty Name="IdSubComite" ColumnName="IdSubComite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK__C_Comites__Activ__70DDC3D8" TypeName="NormanetRestrucModel.FK__C_Comites__Activ__70DDC3D8" StoreEntitySet="C_ComitesTecnicos">
+            <EndProperty Name="C_ComitesTecnicos">
+              <ScalarProperty Name="IdComiteTecnico" ColumnName="IdComiteTecnico" />
+            </EndProperty>
+            <EndProperty Name="C_Comites">
+              <ScalarProperty Name="IdComite" ColumnName="IdComite" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__C_GruposT__Activ__7A672E12" TypeName="NormanetRestrucModel.FK__C_GruposT__Activ__7A672E12" StoreEntitySet="C_GruposTrabajo">
+            <EndProperty Name="C_GruposTrabajo">
+              <ScalarProperty Name="IdGrupoTrabajo" ColumnName="IdGrupoTrabajo" />
+            </EndProperty>
+            <EndProperty Name="C_Comites">
+              <ScalarProperty Name="IdComite" ColumnName="IdComite" />
+            </EndProperty>
+            <Condition ColumnName="IdComite" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__C_GruposT__IdCom__7B5B524B" TypeName="NormanetRestrucModel.FK__C_GruposT__IdCom__7B5B524B" StoreEntitySet="C_GruposTrabajo">
+            <EndProperty Name="C_GruposTrabajo">
+              <ScalarProperty Name="IdGrupoTrabajo" ColumnName="IdGrupoTrabajo" />
+            </EndProperty>
+            <EndProperty Name="C_ComitesTecnicos">
+              <ScalarProperty Name="IdComiteTecnico" ColumnName="IdComiteTecnico" />
+            </EndProperty>
+            <Condition ColumnName="IdComiteTecnico" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__C_SubComi__Activ__75A278F5" TypeName="NormanetRestrucModel.FK__C_SubComi__Activ__75A278F5" StoreEntitySet="C_SubComites">
+            <EndProperty Name="C_SubComites">
+              <ScalarProperty Name="IdSubComite" ColumnName="IdSubComite" />
+            </EndProperty>
+            <EndProperty Name="C_ComitesTecnicos">
+              <ScalarProperty Name="IdComiteTecnico" ColumnName="IdComiteTecnico" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__C_GruposT__IdSub__7C4F7684" TypeName="NormanetRestrucModel.FK__C_GruposT__IdSub__7C4F7684" StoreEntitySet="C_GruposTrabajo">
+            <EndProperty Name="C_GruposTrabajo">
+              <ScalarProperty Name="IdGrupoTrabajo" ColumnName="IdGrupoTrabajo" />
+            </EndProperty>
+            <EndProperty Name="C_SubComites">
+              <ScalarProperty Name="IdSubComite" ColumnName="IdSubComite" />
+            </EndProperty>
+            <Condition ColumnName="IdSubComite" IsNull="false" />
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="Get_Comites_Tecnicos" FunctionName="NormanetRestrucModel.Store.uspComites" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2007/06/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

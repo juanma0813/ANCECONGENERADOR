@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2007/06/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4f3e7a01afc64f5bbfa7966e7730307c" Name="Diagram1">
+        <EntityTypeShape EntityType="NormanetRestrucModel.C_Comites" Width="2.25" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NormanetRestrucModel.C_ComitesTecnicos" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NormanetRestrucModel.C_GruposTrabajo" Width="1.5" PointX="7" PointY="4.25" />
+        <EntityTypeShape EntityType="NormanetRestrucModel.C_SubComites" Width="1.5" PointX="7.625" PointY="0.5" />
+        <AssociationConnector Association="NormanetRestrucModel.FK__C_Comites__Activ__70DDC3D8" />
+        <AssociationConnector Association="NormanetRestrucModel.FK__C_GruposT__Activ__7A672E12" />
+        <AssociationConnector Association="NormanetRestrucModel.FK__C_GruposT__IdCom__7B5B524B" />
+        <AssociationConnector Association="NormanetRestrucModel.FK__C_SubComi__Activ__75A278F5" />
+        <AssociationConnector Association="NormanetRestrucModel.FK__C_GruposT__IdSub__7C4F7684" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
