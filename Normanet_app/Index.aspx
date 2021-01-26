@@ -194,7 +194,7 @@
 
            </div>
            <div id="AreaRestringida">
-               <div id="LogoAnce"></div>
+               <%--<div id="LogoAnce"></div>--%>
            </div>
            <telerik:RadWindowManager runat="server" RestrictionZoneID="AreaRestringida" ID="rdWndMngPrincipal" EnableShadow="true"  
                 ShowOnTopWhenMaximized="false" ShowContentDuringLoad="false"  SkinID="SkinManager"

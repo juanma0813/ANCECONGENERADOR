@@ -59,13 +59,13 @@ Partial Public Class Comite
     Protected WithEvents TextBox6 As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Control RadTreeView1.
+    '''Control rtrvComites.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents RadTreeView1 As Global.Telerik.Web.UI.RadTreeView
+    Protected WithEvents rtrvComites As Global.Telerik.Web.UI.RadTreeView
 
     '''<summary>
     '''Control RadLabel1.
@@ -77,13 +77,13 @@ Partial Public Class Comite
     Protected WithEvents RadLabel1 As Global.Telerik.Web.UI.RadLabel
 
     '''<summary>
-    '''Control txtNombre.
+    '''Control txtComite.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txtNombre As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtComite As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Control RadLabel2.
@@ -95,13 +95,13 @@ Partial Public Class Comite
     Protected WithEvents RadLabel2 As Global.Telerik.Web.UI.RadLabel
 
     '''<summary>
-    '''Control TextBox1.
+    '''Control txtComiteTecnico.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents TextBox1 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtComiteTecnico As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Control RadLabel3.
@@ -113,13 +113,13 @@ Partial Public Class Comite
     Protected WithEvents RadLabel3 As Global.Telerik.Web.UI.RadLabel
 
     '''<summary>
-    '''Control TextBox2.
+    '''Control txtSubcomite.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents TextBox2 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtSubcomite As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Control RadLabel4.
@@ -131,13 +131,13 @@ Partial Public Class Comite
     Protected WithEvents RadLabel4 As Global.Telerik.Web.UI.RadLabel
 
     '''<summary>
-    '''Control TextBox3.
+    '''Control txtGrupoTrabajo.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents TextBox3 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtGrupoTrabajo As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Control RadLabel5.
@@ -185,13 +185,13 @@ Partial Public Class Comite
     Protected WithEvents RadLabel7 As Global.Telerik.Web.UI.RadLabel
 
     '''<summary>
-    '''Control DropDownList1.
+    '''Control cboResponsables.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents DropDownList1 As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cboResponsables As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''Control RadLabel8.
@@ -203,13 +203,13 @@ Partial Public Class Comite
     Protected WithEvents RadLabel8 As Global.Telerik.Web.UI.RadLabel
 
     '''<summary>
-    '''Control RadCheckBox1.
+    '''Control chkVisible.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents RadCheckBox1 As Global.Telerik.Web.UI.RadCheckBox
+    Protected WithEvents chkVisible As Global.Telerik.Web.UI.RadCheckBox
 
     '''<summary>
     '''Control block.

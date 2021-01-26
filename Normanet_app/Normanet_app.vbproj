@@ -48,10 +48,6 @@
     <Reference Include="clsBoxing">
       <HintPath>..\DllsCompartidas\clsBoxing.dll</HintPath>
     </Reference>
-    <Reference Include="clsConeccion, Version=1.0.0.0, Culture=neutral, PublicKeyToken=13d0c93f5a2ed5f5, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\vpn ance\Demo_estructuras_25_01_2021\EmpleadosDemo\DllsCompartidas\clsConeccion.dll</HintPath>
-    </Reference>
     <Reference Include="clsSendMail">
       <HintPath>..\DllsCompartidas\clsSendMail.dll</HintPath>
     </Reference>
@@ -807,6 +803,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Normanet_Datos\Normanet_Datos.vbproj">
+      <Project>{2a2bc9d5-f357-4a4b-a5e2-c258bd0a26fb}</Project>
+      <Name>Normanet_Datos</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

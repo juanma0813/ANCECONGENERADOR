@@ -1,28 +1,27 @@
-锘縍EM Clase en VB creada automaticamente by ..:: ANCE A.C.  ::.. .Clase creada el: 25/01/2021 12:00:00 a. m. Version 3.3.2
+REM Clase en VB creada automaticamente by ..:: ANCE A.C.  ::.. .Clase creada el: 25/01/2021 12:00:00 a. m. Version 3.3.2
 Imports System.Linq
 Imports System.Text
 Imports System.Data
 Imports System.Data.SqlClient
 Imports System.Configuration
-Imports clsConeccion.AnceSystem
+
 
 Namespace AnceSystem
 
-    Public Class clssComites
-        Implements IDisposable
-
-
-#Region "Propiedades de la clase"
-        REM Variables de Propiedad
-        Private _IdComite As Integer
-        Private _Comite As String
-        Private _Alcance As String
-        Private _IdUsuarioResponsable As String
-        Private _Objetivo As String
-        Private _FechaAlta As Nullable(Of DateTime)
-        Private _Activo As Boolean
-        Private _sXML As String
-        Private _Bandera As String
+   Public Class clssComites
+      Implements IDisposable
+#Region"Propiedades de la clase"
+      REM Variables de Propiedad
+      Private _IdComite as integer
+      Private _Comite as String
+      Private _Alcance as String
+      Private _IdUsuarioResponsable as String
+      Private _Objetivo as String
+      Private _FechaAlta as Nullable(Of DateTime)
+      Private _Activo as Boolean
+      Private _Descripcion as String
+      Private _sXML as String
+      Private _Bandera as String
         Private _bError As String
 
 
@@ -31,116 +30,150 @@ Namespace AnceSystem
         Private cn As SqlConnection
         Private disposedValue As Boolean
 
+
         REM Propiedades de la Entidad
-        Public Property IdComite As Integer
-            Get
-                Return _IdComite
-            End Get
-            Set(ByVal Value As Integer)
-                _IdComite = Value
-            End Set
-        End Property
+        Public Property IdComite as integer
+         Get
+            Return _IdComite
+         End Get
+         Set(ByVal Value as integer)
+            _IdComite = Value
+         End Set
+      End Property
 
-        Public Property Comite As String
-            Get
-                Return _Comite
-            End Get
-            Set(ByVal Value As String)
-                _Comite = Value
-            End Set
-        End Property
+      public Property Comite as String
+         Get
+            Return _Comite
+         End Get
+         Set(ByVal Value as String)
+            _Comite = Value
+         End Set
+      End Property
 
-        Public Property Alcance As String
-            Get
-                Return _Alcance
-            End Get
-            Set(ByVal Value As String)
-                _Alcance = Value
-            End Set
-        End Property
+      public Property Alcance as String
+         Get
+            Return _Alcance
+         End Get
+         Set(ByVal Value as String)
+            _Alcance = Value
+         End Set
+      End Property
 
-        Public Property IdUsuarioResponsable As String
-            Get
-                Return _IdUsuarioResponsable
-            End Get
-            Set(ByVal Value As String)
-                _IdUsuarioResponsable = Value
-            End Set
-        End Property
+      public Property IdUsuarioResponsable as String
+         Get
+            Return _IdUsuarioResponsable
+         End Get
+         Set(ByVal Value as String)
+            _IdUsuarioResponsable = Value
+         End Set
+      End Property
 
-        Public Property Objetivo As String
-            Get
-                Return _Objetivo
-            End Get
-            Set(ByVal Value As String)
-                _Objetivo = Value
-            End Set
-        End Property
+      public Property Objetivo as String
+         Get
+            Return _Objetivo
+         End Get
+         Set(ByVal Value as String)
+            _Objetivo = Value
+         End Set
+      End Property
 
-        Public Property FechaAlta As Nullable(Of DateTime)
-            Get
-                Return _FechaAlta
-            End Get
-            Set(ByVal Value As Nullable(Of DateTime))
-                _FechaAlta = Value
-            End Set
-        End Property
+      public Property FechaAlta as Nullable(Of DateTime)
+         Get
+            Return _FechaAlta
+         End Get
+         Set(ByVal Value as Nullable(Of DateTime))
+            _FechaAlta = Value
+         End Set
+      End Property
 
-        Public Property Activo As Boolean
-            Get
-                Return _Activo
-            End Get
-            Set(ByVal Value As Boolean)
-                _Activo = Value
-            End Set
-        End Property
+      public Property Activo as Boolean
+         Get
+            Return _Activo
+         End Get
+         Set(ByVal Value as Boolean)
+            _Activo = Value
+         End Set
+      End Property
+
+      public Property Descripcion as String
+         Get
+            Return _Descripcion
+         End Get
+         Set(ByVal Value as String)
+            _Descripcion = Value
+         End Set
+      End Property
 
         ''' <summary>
         '''Se utiliza para pasarle la parametro sXML a un store procedure
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property sXML As String
-            Get
-                Return _sXML
-            End Get
-            Set(ByVal Value As String)
-                _sXML = Value
-            End Set
-        End Property
+      public Property sXML as String
+         Get
+            Return _sXML
+         End Get
+         Set(ByVal Value as String)
+            _sXML = Value
+         End Set
+      End Property
 
         ''' <summary>
         '''Se utiliza para pasarle la bandera a un store procedure
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property Bandera As String
-            Get
-                Return _Bandera
-            End Get
-            Set(ByVal Value As String)
-                _Bandera = Value
-            End Set
-        End Property
+      public Property Bandera as String
+         Get
+            Return _Bandera
+         End Get
+         Set(ByVal Value as String)
+            _Bandera = Value
+         End Set
+      End Property
 
         ''' <summary>
         '''Se utiliza para saber si el metodo fallo
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property bError As Boolean
-            Get
-                Return _bError
-            End Get
-            Set(ByVal Value As Boolean)
-                _bError = Value
-            End Set
-        End Property
+      public Property bError as Boolean
+         Get
+            Return _bError
+         End Get
+         Set(ByVal Value as Boolean)
+            _bError = Value
+         End Set
+      End Property
 
-        REM propiedades autoimplementadas solo para FWK 3.5
-        Public Property Propiedades As PropertyCollection
-        Public Property Encontrado As Boolean
-        Public Property uException As Exception
+      REM propiedades autoimplementadas solo para FWK 3.5
+      Public Property Propiedades as PropertyCollection
+      Public Property Encontrado as Boolean
+      Public Property uException As Exception
         ''|| TagPropiedades
         ''|| EndTagPropiedades
 
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: eliminar el estado administrado (objetos administrados)
+                End If
+
+                ' TODO: liberar los recursos no administrados (objetos no administrados) y reemplazar el finalizador
+                ' TODO: establecer los campos grandes como NULL
+                disposedValue = True
+            End If
+        End Sub
+
+        ' ' TODO: reemplazar el finalizador solo si "Dispose(disposing As Boolean)" tiene c骴igo para liberar los recursos no administrados
+        ' Protected Overrides Sub Finalize()
+        '     ' No cambie este c骴igo. Coloque el c骴igo de limpieza en el m閠odo "Dispose(disposing As Boolean)".
+        '     Dispose(disposing:=False)
+        '     MyBase.Finalize()
+        ' End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' No cambie este c骴igo. Coloque el c骴igo de limpieza en el m閠odo "Dispose(disposing As Boolean)".
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
+        End Sub
 #End Region
 
 #Region "Metodos de la Clase"
@@ -148,24 +181,23 @@ Namespace AnceSystem
         '''Contructor de la clase
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub New(ByVal Optional sNombreCn As String = "cnSistema")
-            REM cn = New SqlConnection("")
-            cn = New SqlConnection(ConfigurationManager.ConnectionStrings("cnSistema").ConnectionString)
-            'cn = New SqlConnection(clssConeccion.Conectar(sNombreCn))
-        End Sub
-        REM Funcion que Elimina datos
+        Public sub New(ByVal Optional sNombreCn as String="cnSistema")
+         rem cn = New SqlConnection("")
+         rem cn = New SqlConnection(ConfigurationManager.ConnectionStrings("").ConnectionString)
+         cn = New SqlConnection(clsConeccion.AnceSystem.clssConeccion.Conectar(sNombreCn))
+      End Sub 
+      Rem Funcion que Elimina datos
         ''' <summary>
         '''Metodo para eliminar, contiene todos los campos de la base de la tabla
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub Eliminar()
+      public Sub Eliminar() 
 
-            Try
-                bError = False
-                cn.Open()
-
-                Using cmd As New SqlCommand
-                    cmd.CommandText = "uspBorrar"
+         Try
+               bError = False
+               Cn.Open
+               Using cmd As New SqlCommand
+                    cmd.CommandText = "uspComites"
                     cmd.CommandType = CommandType.StoredProcedure
                     cmd.Connection = cn
                     cmd.Parameters.AddWithValue("@IdComite", _IdComite)
@@ -175,6 +207,7 @@ Namespace AnceSystem
                     cmd.Parameters.AddWithValue("@Objetivo", _Objetivo)
                     cmd.Parameters.AddWithValue("@FechaAlta", _FechaAlta)
                     cmd.Parameters.AddWithValue("@Activo", _Activo)
+                    cmd.Parameters.AddWithValue("@Descripcion", _Descripcion)
                     ''|| TagParametros
                     ''|| EndTagParametros
                     cmd.Parameters.AddWithValue("@sXML", _sXML)
@@ -204,7 +237,7 @@ Namespace AnceSystem
                 cn.Open()
 
                 Using cmd As New SqlCommand
-                    cmd.CommandText = "uspBorrar"
+                    cmd.CommandText = "uspComites"
                     cmd.CommandType = CommandType.StoredProcedure
                     cmd.Connection = cn
                     cmd.Parameters.AddWithValue("@IdComite", _IdComite)
@@ -214,6 +247,7 @@ Namespace AnceSystem
                     cmd.Parameters.AddWithValue("@Objetivo", _Objetivo)
                     cmd.Parameters.AddWithValue("@FechaAlta", _FechaAlta)
                     cmd.Parameters.AddWithValue("@Activo", _Activo)
+                    cmd.Parameters.AddWithValue("@Descripcion", _Descripcion)
                     ''|| TagParametros
                     ''|| EndTagParametros
                     cmd.Parameters.AddWithValue("@sXML", _sXML)
@@ -244,7 +278,7 @@ Namespace AnceSystem
                 cn.Open()
 
                 Using cmd As New SqlCommand
-                    cmd.CommandText = "uspBorrar"
+                    cmd.CommandText = "uspComites"
                     cmd.CommandType = CommandType.StoredProcedure
                     cmd.Connection = cn
                     cmd.Parameters.AddWithValue("@IdComite", _IdComite)
@@ -254,6 +288,7 @@ Namespace AnceSystem
                     cmd.Parameters.AddWithValue("@Objetivo", _Objetivo)
                     cmd.Parameters.AddWithValue("@FechaAlta", _FechaAlta)
                     cmd.Parameters.AddWithValue("@Activo", _Activo)
+                    cmd.Parameters.AddWithValue("@Descripcion", _Descripcion)
                     ''|| TagParametros
                     ''|| EndTagParametros
                     cmd.Parameters.AddWithValue("@sXML", _sXML)
@@ -284,7 +319,7 @@ Namespace AnceSystem
                 cn.Open()
 
                 Using cmd As New SqlCommand
-                    cmd.CommandText = "uspBorrar"
+                    cmd.CommandText = "uspComites"
                     cmd.CommandType = CommandType.StoredProcedure
                     cmd.Connection = cn
                     cmd.Parameters.AddWithValue("@IdComite", _IdComite)
@@ -294,6 +329,7 @@ Namespace AnceSystem
                     cmd.Parameters.AddWithValue("@Objetivo", _Objetivo)
                     cmd.Parameters.AddWithValue("@FechaAlta", _FechaAlta)
                     cmd.Parameters.AddWithValue("@Activo", _Activo)
+                    cmd.Parameters.AddWithValue("@Descripcion", _Descripcion)
                     ''|| TagParametros
                     ''|| EndTagParametros
                     cmd.Parameters.AddWithValue("@sXML", _sXML)
@@ -312,6 +348,7 @@ Namespace AnceSystem
                     _Objetivo = IIf(IsDBNull(dt.Rows(0).Item("Objetivo")) = True, Nothing, dt.Rows(0).Item("Objetivo"))
                     _FechaAlta = IIf(IsDBNull(dt.Rows(0).Item("FechaAlta")) = True, Nothing, dt.Rows(0).Item("FechaAlta"))
                     _Activo = IIf(IsDBNull(dt.Rows(0).Item("Activo")) = True, Nothing, dt.Rows(0).Item("Activo"))
+                    _Descripcion = IIf(IsDBNull(dt.Rows(0).Item("Descripcion")) = True, Nothing, dt.Rows(0).Item("Descripcion"))
                     ''|| TagLlenado
                     ''|| EndTagLlenado
                     _Encontrado = True
@@ -323,6 +360,7 @@ Namespace AnceSystem
                     _Objetivo = Nothing
                     _FechaAlta = Nothing
                     _Activo = Nothing
+                    _Descripcion = Nothing
                     ''|| TagLlenado1
                     ''|| EndTagLlemado1
                     _Encontrado = False
@@ -349,71 +387,47 @@ Namespace AnceSystem
                 cn.Open()
 
                 Using cmd As New SqlCommand
-                    cmd.CommandText = "uspBorrar"
+                    cmd.CommandText = "uspComites"
                     cmd.CommandType = CommandType.StoredProcedure
-                    cmd.Connection = cn
-                    cmd.Parameters.AddWithValue("@IdComite", _IdComite)
-                    cmd.Parameters.AddWithValue("@Comite", _Comite)
-                    cmd.Parameters.AddWithValue("@Alcance", _Alcance)
-                    cmd.Parameters.AddWithValue("@IdUsuarioResponsable", _IdUsuarioResponsable)
-                    cmd.Parameters.AddWithValue("@Objetivo", _Objetivo)
-                    cmd.Parameters.AddWithValue("@FechaAlta", _FechaAlta)
-                    cmd.Parameters.AddWithValue("@Activo", _Activo)
-                    ''|| TagParametros
-                    ''|| EndTagParametros
-                    cmd.Parameters.AddWithValue("@sXML", _sXML)
-                    cmd.Parameters.AddWithValue("@Bandera", _Bandera)
-                    Using da As New SqlDataAdapter(cmd)
-                        da.Fill(dt)
-                    End Using
+                  cmd.Connection = cn
+                  cmd.Parameters.AddWithValue ("@IdComite",_IdComite)
+                  cmd.Parameters.AddWithValue ("@Comite",_Comite)
+                  cmd.Parameters.AddWithValue ("@Alcance",_Alcance)
+                  cmd.Parameters.AddWithValue ("@IdUsuarioResponsable",_IdUsuarioResponsable)
+                  cmd.Parameters.AddWithValue ("@Objetivo",_Objetivo)
+                  cmd.Parameters.AddWithValue ("@FechaAlta",_FechaAlta)
+                  cmd.Parameters.AddWithValue ("@Activo",_Activo)
+                  cmd.Parameters.AddWithValue ("@Descripcion",_Descripcion)
+                  ''|| TagParametros
+                  ''|| EndTagParametros
+                  cmd.Parameters.AddWithValue ("@sXML",_sXML)
+                  cmd.Parameters.AddWithValue ("@Bandera",_Bandera)
+                  Using da As New SqlDataAdapter(cmd)
+                     da.Fill(dt)
+                  End Using
 
-                    If dt.Rows.Count = 1 Then
-                        Propiedades = New PropertyCollection
-                        For Each cols As DataColumn In dt.Columns
-                            Propiedades.Add(cols.ColumnName, IIf(IsDBNull(dt.Rows(0).Item(cols.ColumnName)), "", dt.Rows(0).Item(cols.ColumnName)))
-                        Next
-                        _Encontrado = True
-                    End If
+                  If dt.Rows.Count = 1 Then
+                     Propiedades = New PropertyCollection
+                     For Each cols As DataColumn In dt.Columns
+                        Propiedades.Add(cols.ColumnName, IIF(isDbNull(dt.Rows(0).Item(cols.ColumnName)),"",dt.Rows(0).Item(cols.ColumnName)))
+                     Next
+                     _Encontrado = True
+                  End If
 
-                End Using
+               End Using
 
-            Catch ex As Exception
-                bError = True
-                uException = ex
-            Finally
-                cn.Close()
-            End Try
-            Return dt
-        End Function
-
-        Protected Overridable Sub Dispose(disposing As Boolean)
-            If Not disposedValue Then
-                If disposing Then
-                    ' TODO: eliminar el estado administrado (objetos administrados)
-                End If
-
-                ' TODO: liberar los recursos no administrados (objetos no administrados) y reemplazar el finalizador
-                ' TODO: establecer los campos grandes como NULL
-                disposedValue = True
-            End If
-        End Sub
-
-        ' ' TODO: reemplazar el finalizador solo si "Dispose(disposing As Boolean)" tiene c贸digo para liberar los recursos no administrados
-        ' Protected Overrides Sub Finalize()
-        '     ' No cambie este c贸digo. Coloque el c贸digo de limpieza en el m茅todo "Dispose(disposing As Boolean)".
-        '     Dispose(disposing:=False)
-        '     MyBase.Finalize()
-        ' End Sub
-
-        Public Sub Dispose() Implements IDisposable.Dispose
-            ' No cambie este c贸digo. Coloque el c贸digo de limpieza en el m茅todo "Dispose(disposing As Boolean)".
-            Dispose(disposing:=True)
-            GC.SuppressFinalize(Me)
-        End Sub
+         Catch ex as Exception
+            bError = True
+            uException = ex
+         Finally
+            Cn.Close
+         End Try
+         Return dt
+      End Function
 
 
 #End Region
 
-    End Class
+   End Class
 
 End Namespace

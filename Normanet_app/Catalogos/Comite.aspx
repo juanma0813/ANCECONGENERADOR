@@ -42,7 +42,7 @@
                     <td rowspan="9" style="width: 40%;">
                         <br />
                         <asp:TextBox ID="TextBox6" runat="server" Width="98%" placeholder="Buscar..." ></asp:TextBox>
-                         <telerik:RadTreeView OnNodeClick="RadTreeView1_NodeClick" RenderMode="Classic" ID="RadTreeView1" runat="server"  Width="100%" Height="100%">
+                         <telerik:RadTreeView OnNodeClick="rtrvComites_NodeClick" RenderMode="Classic" ID="rtrvComites" runat="server"  Width="100%" Height="100%">
                 
                         </telerik:RadTreeView>
                     </td>
@@ -53,7 +53,7 @@
                             <telerik:RadLabel ID="RadLabel1" Text="Comité:" runat="server"></telerik:RadLabel>
                         </th>
                         <td>
-                            <asp:TextBox ID="txtNombre" runat="server" Width="98%"></asp:TextBox>
+                            <asp:TextBox ID="txtComite" runat="server" Width="98%"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -61,7 +61,7 @@
                             <telerik:RadLabel ID="RadLabel2" Text="Comité Técnico:" runat="server"></telerik:RadLabel>
                         </th>
                         <td>
-                            <asp:TextBox ID="TextBox1" runat="server" Width="98%"></asp:TextBox>
+                            <asp:TextBox ID="txtComiteTecnico" runat="server" Width="98%"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -69,7 +69,7 @@
                             <telerik:RadLabel ID="RadLabel3" Text="Subcomité:" runat="server"></telerik:RadLabel>
                         </th>
                         <td>
-                            <asp:TextBox ID="TextBox2" runat="server" Width="98%"></asp:TextBox>
+                            <asp:TextBox ID="txtSubcomite" runat="server" Width="98%"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -77,7 +77,7 @@
                             <telerik:RadLabel ID="RadLabel4" Text="Grupo de Trabajo:" runat="server"></telerik:RadLabel>
                         </th>
                         <td>
-                            <asp:TextBox ID="TextBox3" runat="server" Width="98%"></asp:TextBox>
+                            <asp:TextBox ID="txtGrupoTrabajo" runat="server" Width="98%"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -101,7 +101,7 @@
                             <telerik:RadLabel ID="RadLabel7" Text="Responsable:" runat="server"></telerik:RadLabel>
                         </th>
                         <td style="width: 40%;">
-                            <asp:DropDownList ID="DropDownList1" Width="108%" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="cboResponsables" Width="108%" runat="server"></asp:DropDownList>
                         </td>
                     </tr>
                     <tr>
@@ -110,7 +110,7 @@
                         </th>
                         <td style="width: 40%;">
                             
-                            <telerik:RadCheckBox ID="RadCheckBox1" runat="server" Text=""></telerik:RadCheckBox>
+                            <telerik:RadCheckBox ID="chkVisible" runat="server" Text=""></telerik:RadCheckBox>
                         </td>
                     </tr>
  
