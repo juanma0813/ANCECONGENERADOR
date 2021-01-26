@@ -296,7 +296,6 @@ Namespace AnceSystem
 
                     cmd.ExecuteNonQuery()
                 End Using
-
             Catch ex As Exception
                 bError = True
                 uException = ex

@@ -5,7 +5,7 @@ Public Class Comite
     Inherits System.Web.UI.Page
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
-            DeshabilitarCampos()
+            'DeshabilitarCampos()
         End If
 
 
@@ -19,6 +19,37 @@ Public Class Comite
     End Sub
 
 
+
+
+
+
+
+    Protected Sub btnCuentas_ButtonClick(sender As Object, e As Telerik.Web.UI.RadToolBarEventArgs) Handles btnCuentas.ButtonClick
+        Menu(e.Item.Value)
+    End Sub
+
+    Private Sub Menu(btnValue As Integer)
+        Select Case btnValue
+            Case eBtnFormularios.Nuevo
+
+                Limpiar(txtComite, txtComiteTecnico, txtSubcomite, txtGrupoTrabajo, txtdescripcion, txtobjetivo)
+                'BotonesNuevo()
+            Case eBtnFormularios.Editar
+                AddWindow(Me.Page, "Test.aspx", "..:: Test ::.. - DemoMenuBaseMultiVentanas", 700, 550, False)
+                ScriptManager.RegisterStartupScript(Me.Page, Page.GetType, Guid.NewGuid.ToString, "", True)
+            Case eBtnFormularios.Guardar
+                Guardar()
+                'MsgJquery(UpdatePanel2, "Accion guardada correctamente", "..:: Borrame ::..")
+            Case eBtnFormularios.Deshacer
+                lblMensaje.Text = "�Estas seguro de eliminar los datos?"
+                MsgJqueryConfirm(Me.Page, "pnlConfirm", "..:: Demo ::..", UpdatePanel3.ClientID)
+        End Select
+    End Sub
+
+    Private Sub BotonesNuevo()
+        Activar(btnCuentas.Items(eBtnFormularios.Guardar), btnCuentas.Items(eBtnFormularios.Deshacer))
+        inactivar(btnCuentas.Items(eBtnFormularios.Nuevo), btnCuentas.Items(eBtnFormularios.Editar))
+    End Sub
     Private Sub AddNodes()
         Dim Comites = New Normanet_Datos.AnceSystem.clssComites()
         Comites.Bandera = "s2"
@@ -51,7 +82,7 @@ Public Class Comite
             rtrvComites.Nodes(0).Nodes.Add(Comite_node)
         Next
 
-        For Each item As RadTreeNode In rtrvComites.Nodes
+        For Each item As RadTreeNode In rtrvComites.Nodes(0).Nodes
             For j = 0 To (ListaComitesTecnicos.Rows.Count - 1)
 
                 Dim ComiteTecnico_node As New RadTreeNode()
@@ -65,7 +96,7 @@ Public Class Comite
             Next
         Next
 
-        For Each item As RadTreeNode In rtrvComites.Nodes
+        For Each item As RadTreeNode In rtrvComites.Nodes(0).Nodes
             For Each item2 As RadTreeNode In item.Nodes
                 For j = 0 To (ListaSubComites.Rows.Count - 1)
                     Dim SubComite_node As New RadTreeNode()
@@ -83,46 +114,114 @@ Public Class Comite
 
     End Sub
 
+    Private Sub Guardar()
+
+        If rtrvComites.SelectedNode.Level = 0 Then
+            Dim Comite = New Normanet_Datos.AnceSystem.clssComites()
+            Comite.Comite = txtComite.Text
+            Comite.IdUsuarioResponsable = cboResponsables.SelectedValue
+            Comite.Objetivo = txtobjetivo.Text
+            Comite.Descripcion = txtdescripcion.Text
+            Comite.Bandera = "i1"
+            Comite.Insertar()
+        ElseIf rtrvComites.SelectedNode.Level = 1 Then
+            Dim ComiteTecnico = New Normanet_Datos.AnceSystem.clssComitesTecnicos()
+            ComiteTecnico.ComiteTecnico = txtComiteTecnico.Text
+            ComiteTecnico.IdComite = rtrvComites.SelectedValue
+            ComiteTecnico.IdUsuarioResponsable = cboResponsables.SelectedValue
+            ComiteTecnico.Objetivo = txtobjetivo.Text
+            ComiteTecnico.Descripcion = txtdescripcion.Text
+            ComiteTecnico.Bandera = "i1"
+            ComiteTecnico.Insertar()
+
+            If txtGrupoTrabajo.Text = String.Empty Then
+                Dim Grupo = New Normanet_Datos.AnceSystem.clssGruposTrabajo()
+                Grupo.IdComite = rtrvComites.SelectedValue
+                Grupo.IdComiteTecnico = Nothing
+                Grupo.IdSubComite = Nothing
+                Grupo.IdUsuarioResponsable = cboResponsables.SelectedValue
+                Grupo.GrupoTrabajo = txtGrupoTrabajo.Text
+                Grupo.Objetivo = txtobjetivo.Text
+                Grupo.Descripcion = txtdescripcion.Text
+                Grupo.Bandera = "i1"
+                Grupo.Insertar()
+            End If
+        ElseIf rtrvComites.SelectedNode.Level = 2 Then
+            Dim SubComite = New Normanet_Datos.AnceSystem.clssSubComites()
+            SubComite.IdComiteTecnico = rtrvComites.SelectedValue
+            SubComite.SubComite = txtSubcomite.Text
+            SubComite.IdUsuarioResponsable = cboResponsables.SelectedValue
+            SubComite.Objetivo = txtobjetivo.Text
+            SubComite.Descripcion = txtdescripcion.Text
+            SubComite.Bandera = "i1"
+            SubComite.Insertar()
+
+            If txtGrupoTrabajo.Text = String.Empty Then
+                Dim Grupo = New Normanet_Datos.AnceSystem.clssGruposTrabajo()
+                Grupo.IdComite = rtrvComites.SelectedNode.ParentNode.Value
+                Grupo.IdComiteTecnico = rtrvComites.SelectedValue
+                Grupo.IdSubComite = Nothing
+                Grupo.IdUsuarioResponsable = cboResponsables.SelectedValue
+                Grupo.GrupoTrabajo = txtGrupoTrabajo.Text
+                Grupo.Objetivo = txtobjetivo.Text
+                Grupo.Descripcion = txtdescripcion.Text
+                Grupo.Bandera = "i1"
+                Grupo.Insertar()
+            End If
+
+        ElseIf rtrvComites.SelectedNode.Level = 3 Then
+            If txtGrupoTrabajo.Text <> String.Empty Then
+                Dim Grupo = New Normanet_Datos.AnceSystem.clssGruposTrabajo()
 
 
+                Grupo.IdSubComite = rtrvComites.SelectedValue
+                Grupo.IdComiteTecnico = rtrvComites.SelectedNode.ParentNode.Value
+                Grupo.IdComite = rtrvComites.SelectedNode.ParentNode.ParentNode.Value
 
-    Protected Sub btnCuentas_ButtonClick(sender As Object, e As Telerik.Web.UI.RadToolBarEventArgs) Handles btnCuentas.ButtonClick
-        Menu(e.Item.Value)
+                Grupo.IdUsuarioResponsable = cboResponsables.SelectedValue
+                Grupo.GrupoTrabajo = txtGrupoTrabajo.Text
+                Grupo.Objetivo = txtobjetivo.Text
+                Grupo.Descripcion = txtdescripcion.Text
+                Grupo.Bandera = "i1"
+                Grupo.Insertar()
+            End If
+        End If
+        'If txtGrupoTrabajo.Text = String.Empty Then
+        '    Dim Grupo = New Normanet_Datos.AnceSystem.clssGruposTrabajo()
+        '    Grupo.IdComite =
+        '    Grupo.IdComiteTecnico =
+        '    Grupo.IdSubComite =
+        '    Grupo.IdUsuarioResponsable = cboResponsables.SelectedValue
+        '    Grupo.Objetivo = txtobjetivo.Text
+        '    Grupo.Descripcion = txtdescripcion.Text
+        '    Grupo.Bandera = "i1"
+        '    Grupo.Insertar()
+        'End If
+        MsgJquery(UpdatePanel2, "Accion guardada correctamente", "..:: Borrame ::..")
     End Sub
 
-    Private Sub Menu(btnValue As Integer)
-        Select Case btnValue
-            Case eBtnFormularios.Nuevo
-                BotonesNuevo()
-            Case eBtnFormularios.Editar
-                AddWindow(Me.Page, "Test.aspx", "..:: Test ::.. - DemoMenuBaseMultiVentanas", 700, 550, False)
-                ScriptManager.RegisterStartupScript(Me.Page, Page.GetType, Guid.NewGuid.ToString, "", True)
-            Case eBtnFormularios.Guardar
-                MsgJquery(UpdatePanel2, "Accion guardada correctamente", "..:: Borrame ::..")
-            Case eBtnFormularios.Deshacer
-                lblMensaje.Text = "�Estas seguro de eliminar los datos?"
-                MsgJqueryConfirm(Me.Page, "pnlConfirm", "..:: Demo ::..", UpdatePanel3.ClientID)
-
-
-        End Select
-    End Sub
-
-    Private Sub BotonesNuevo()
-        Activar(btnCuentas.Items(eBtnFormularios.Guardar), btnCuentas.Items(eBtnFormularios.Deshacer))
-        inactivar(btnCuentas.Items(eBtnFormularios.Nuevo), btnCuentas.Items(eBtnFormularios.Editar))
+    Private Sub LimpiarFormulario()
+        txtComite.Text = ""
+        txtComiteTecnico.Text = ""
+        txtSubcomite.Text = ""
+        txtGrupoTrabajo.Text = ""
+        txtdescripcion.Text = ""
+        txtobjetivo.Text = ""
+        chkVisible.Checked = False
     End Sub
 
     Protected Sub rtrvComites_NodeClick(sender As Object, e As RadTreeNodeEventArgs)
 
-
-        'Nivel 0 => Comite, Nivel 1 => ComiteTecnico, Nivel 2 => SubComite, Nivel 3 => Grupo de trabajo
+        LimpiarFormulario()
         If e.Node.Level = 0 Then
-            consultarComite(e.Node.Value)
+            LimpiarFormulario()
         ElseIf e.Node.Level = 1 Then
-            consultarComiteTecnico(e.Node.Value)
+            consultarComite(e.Node.Value)
         ElseIf e.Node.Level = 2 Then
-            consultarSubComite(e.Node.Value)
+            consultarComiteTecnico(e.Node.Value)
         ElseIf e.Node.Level = 3 Then
+            consultarSubComite(e.Node.Value)
+        ElseIf e.Node.Level = 4 Then
             consultarGrupoTrabajo(e.Node.Value)
         End If
 
@@ -213,6 +312,12 @@ Public Class Comite
         Dim Respuesta = Responsables.Listar()
 
         cboResponsables.Items.Clear()
+
+        'Dim item As New ListItem()
+        'item.Value = 0
+        'item.Text = "Seleccione una opción"
+        'cboResponsables.Items.Add(item)
+
 
         For Each row As DataRow In Respuesta.Rows
             Dim item As New ListItem()

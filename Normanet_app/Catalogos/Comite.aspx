@@ -20,9 +20,9 @@
 
     <telerik:RadAjaxPanel ID="rapContenedor" runat="server" Width="100%" LoadingPanelID="ralLoad">
         <!----------------------------------B O T O N E R A--------------------------------------------->
-        <telerik:RadToolBar ID="btnCuentas" Runat="server" Height="32" Width="100%" SkinID="SkinManager" OnClientButtonClicking="clientButtonClicking">  
+        <telerik:RadToolBar ID="btnCuentas" Runat="server" Height="32" Width="100%" SkinID="SkinManager" OnClientButtonClicking="clientButtonClicking" AutoPostBack="true">  
             <Items>
-                <telerik:RadToolBarButton Enabled="true" Value="0" ImageUrl="../Imagenes/Botoneras/New.png" Text="Nuevo" ToolTip ="Nuevo"/>
+                <telerik:RadToolBarButton Enabled="true" Value="0" ImageUrl="../Imagenes/Botoneras/New.png"  Text="Nuevo" ToolTip ="Nuevo"/>
                 <telerik:RadToolBarButton Enabled="true" Value="2" ImageUrl="../Imagenes/Botoneras/Edit.png" Text="Editar" ToolTip="Editar"/>
                 <telerik:RadToolBarButton Enabled="true" Value="3" ImageUrl="../Imagenes/Botoneras/redo.png" Text="Deshacer" ToolTip="Deshacer"/>
                 <telerik:RadToolBarButton Enabled="true" Value="1" ImageUrl="../Imagenes/Botoneras/save.png" Text="Guardar" ToolTip="Guardar" ValidationGroup="PersonalInfoGroup"/>
@@ -101,7 +101,7 @@
                             <telerik:RadLabel ID="RadLabel7" Text="Responsable:" runat="server"></telerik:RadLabel>
                         </th>
                         <td style="width: 40%;">
-                            <asp:DropDownList ID="cboResponsables" Width="108%" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="cboResponsables"  Width="108%" runat="server"></asp:DropDownList>
                         </td>
                     </tr>
                     <tr>
@@ -126,15 +126,15 @@
                      var toolBar = sender;
                      var button = args.get_item();
 
-                     if (typeof (Page_ClientValidate) == 'function') { Page_ClientValidate(); }
+                     //if (typeof (Page_ClientValidate) == 'function') { Page_ClientValidate(); }
 
-                     switch (button.get_value()) {
-                         case "1":
-                             if (!Page_IsValid) {
-                                 CallClientShow();
-                             }
-                             break;
-                     }
+                     //switch (button.get_value()) {
+                     //    case "1":
+                     //        if (!Page_IsValid) {
+                     //            CallClientShow();
+                     //        }
+                     //        break;
+                     //}
                  }
 
                  function CallClientShow() {
