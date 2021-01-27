@@ -5,6 +5,7 @@
         ConsultarCategorias()
         If Not IsPostBack Then
             inactivar(btnCuentas.Items(eBtnFormularios.Editar), btnCuentas.Items(eBtnFormularios.Deshacer))
+
         End If
 
     End Sub
@@ -19,12 +20,13 @@
 
                 BotonesNuevo()
             Case eBtnFormularios.Editar
-                'AddWindow(Me.Page, "Test.aspx", "..:: Test ::.. - DemoMenuBaseMultiVentanas", 700, 550, False)
-                'ScriptManager.RegisterStartupScript(Me.Page, Page.GetType, Guid.NewGuid.ToString, "", True)
-                'EditarCategoria()
-                'MsgJquery(UpdatePanel2, "Accion guardada correctamente", "..:: Borrame ::..")
-                Activar(btnCuentas.Items(eBtnFormularios.Editar), btnCuentas.Items(eBtnFormularios.Deshacer))
-                inactivar(btnCuentas.Items(eBtnFormularios.Nuevo), btnCuentas.Items(eBtnFormularios.Guardar))
+                If txtIdCategoria.Text Is String.Empty Then
+                    MsgJquery(UpdatePanel2, "Seleccione una opción", "..:: Borrame ::..")
+                Else
+                    Activar(btnCuentas.Items(eBtnFormularios.Editar), btnCuentas.Items(eBtnFormularios.Deshacer))
+                    inactivar(btnCuentas.Items(eBtnFormularios.Nuevo), btnCuentas.Items(eBtnFormularios.Guardar))
+                End If
+
             Case eBtnFormularios.Guardar
                 If txtIdCategoria.Text = "0" Then
                     GuardarCategoria()
@@ -32,8 +34,6 @@
                     EditarCategoria()
                 End If
 
-
-                MsgJquery(UpdatePanel2, "Accion guardada correctamente", "..:: Borrame ::..")
             Case eBtnFormularios.Deshacer
                 lblMensaje.Text = "�Estas seguro de eliminar los datos?"
                 MsgJqueryConfirm(Me.Page, "pnlConfirm", "..:: Demo ::..", UpdatePanel3.ClientID)
@@ -64,32 +64,57 @@
     End Sub
 
     Private Sub GuardarCategoria()
+        If txtIdCategoria.Text Is String.Empty Then
+            MsgJquery(UpdatePanel2, "Ingrese una categoría", "..:: Borrame ::..")
+        Else
+            Dim Categoria = New Normanet_Datos.AnceSystem.clssCategorias
+            Categoria.Categoria = txtCategoria.Text
+            Categoria.Bandera = "i1"
+            Categoria.Insertar()
+            MsgJquery(UpdatePanel2, "Accion guardada correctamente", "..:: Borrame ::..")
+        End If
 
-        Dim Categoria = New Normanet_Datos.AnceSystem.clssCategorias
-        Categoria.Categoria = txtCategoria.Text
-        Categoria.Bandera = "i1"
-        Categoria.Insertar()
-        ConsultarCategorias()
+
+
+
     End Sub
 
     Private Sub EditarCategoria()
-
-        Dim Categoria = New Normanet_Datos.AnceSystem.clssCategorias
-        Categoria.IdCategoria = txtIdCategoria.Text
-        Categoria.Categoria = txtCategoria.Text
-        Categoria.Bandera = "u1"
-        Categoria.Actualizar()
-        ConsultarCategorias()
+        If txtIdCategoria.Text Is String.Empty Then
+            MsgJquery(UpdatePanel2, "Seleccione una opción", "..:: Borrame ::..")
+        Else
+            Dim Categoria = New Normanet_Datos.AnceSystem.clssCategorias
+            Categoria.IdCategoria = txtIdCategoria.Text
+            Categoria.Categoria = txtCategoria.Text
+            Categoria.Bandera = "u1"
+            Categoria.Actualizar()
+            MsgJquery(UpdatePanel2, "Accion guardada correctamente", "..:: Borrame ::..")
+        End If
     End Sub
 
     Private Sub InactivarCategoria()
-        Dim Categoria = New Normanet_Datos.AnceSystem.clssCategorias
-        Categoria.IdCategoria = rddCategorias.SelectedValue
-        Categoria.Categoria = txtCategoria.Text
-        Categoria.Bandera = "d1"
-        Categoria.Eliminar()
-        ConsultarCategorias()
+        If txtIdCategoria.Text Is String.Empty Then
+            MsgJquery(UpdatePanel2, "Seleccione una opción", "..:: Borrame ::..")
+        Else
+            Dim Categoria = New Normanet_Datos.AnceSystem.clssCategorias
+            Categoria.IdCategoria = txtIdCategoria.Text
+            Categoria.Categoria = txtCategoria.Text
+            Categoria.Bandera = "d1"
+            Categoria.Eliminar()
+            MsgJquery(UpdatePanel2, "Accion guardada correctamente", "..:: Borrame ::..")
+        End If
+
     End Sub
+
+    Private Sub ActualizarPagina()
+        Response.Redirect(HttpContext.Current.Request.Url.ToString(), True)
+    End Sub
+
+    'Protected Sub rddCategorias_ItemSelected(sender As Object, e As Telerik.Web.UI.DropDownListEventArgs)
+    '    txtIdCategoria.Text = rddCategorias.SelectedValue()
+    '    txtIdCategoria.Visible = False
+    '    txtCategoria.Text = rddCategorias.SelectedText()
+    'End Sub
 
     'Protected Sub cmdAceptar_Click(sender As Object, e As ImageClickEventArgs) Handles cmdAceptar.Click
     '    ScriptManager.RegisterStartupScript(Me.Page, Me.Page.GetType, Guid.NewGuid.ToString, "$('#pnlConfirm').dialog('close');", True)

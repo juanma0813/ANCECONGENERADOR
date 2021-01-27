@@ -45,7 +45,7 @@
                 <td style="text-align:left">
                     <asp:TextBox ID="txtIdCategoria" runat="server"></asp:TextBox>
                     <asp:TextBox ID="txtCategoria" runat="server"></asp:TextBox>
-                    <telerik:RadDropDownList ID="rddCategorias" runat="server"></telerik:RadDropDownList>
+                    <telerik:RadDropDownList ID="rddCategorias" runat="server" DefaultMessage="Seleccione una opción" OnClientItemSelected="ObtenerCategoriaSeleccionada"></telerik:RadDropDownList>
                 </td>
               </tr>
                
@@ -62,6 +62,7 @@
                  });
 
                  function clientButtonClicking(sender, args) {
+                     debugger
                      var toolBar = sender;
                      var button = args.get_item();
 
@@ -96,39 +97,37 @@
                  }
 
                  function nuevo() {
-
                      $('#<%=txtIdCategoria.ClientID %>').val(0)
                      $('#<%=rddCategorias.ClientID %>').hide()
                      $('#<%=txtCategoria.ClientID %>').show()
-
                  }
 
                  function editar() {
-                     debugger
-                     var DropDown = $find("<%=rddCategorias.ClientID%>");
-                     
-                     
-                     var idSeleccionado = DropDown.get_selectedItem().get_value();
-                     var textoSeleccionado = DropDown.get_selectedItem().get_text();
+                     var DropDown = $find("<%=rddCategorias.ClientID%>");                    
 
-                     $('#<%=txtIdCategoria.ClientID %>').val(idSeleccionado)
+                     if (DropDown.get_selectedItem() !== null) {
+                         var idSeleccionado = DropDown.get_selectedItem().get_value();
+                         var textoSeleccionado = DropDown.get_selectedItem().get_text();
 
-                     $('#<%=rddCategorias.ClientID %>').hide();
-                     $('#<%=txtCategoria.ClientID %>').show();
-                     $('#<%=txtCategoria.ClientID %>').val(textoSeleccionado);
+                         $('#<%=txtIdCategoria.ClientID %>').val(idSeleccionado)
 
-                     
-
+                         $('#<%=rddCategorias.ClientID %>').hide();
+                         $('#<%=txtCategoria.ClientID %>').show();
+                         $('#<%=txtCategoria.ClientID %>').val(textoSeleccionado);
+                     }   
                  }
 
                  function LimpiarFormulario() {
-                     debugger
                      $('#pnlConfirm').dialog('close');
-                     $('#<%=txtIdCategoria.ClientID %>').val(0)
-                     $('#<%=rddCategorias.ClientID %>').show()
-                     $('#<%=txtCategoria.ClientID %>').hide()
+                     location.reload()
                  }
 
+                 function ObtenerCategoriaSeleccionada(sender, args) {
+                     var valor = args.get_item().get_value()
+                     var txt = args.get_item().get_text()
+                     $('#<%=txtIdCategoria.ClientID %>').val(valor)
+                     $('#<%=txtCategoria.ClientID %>').val(txt)
+                 }
              </script>
         </telerik:RadCodeBlock>
         <div id="Validadores">

@@ -69,6 +69,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clssCargos.vb" />
     <Compile Include="clssCategorias.vb" />
     <Compile Include="clssComites.vb" />
     <Compile Include="clssComitesTecnicos.vb" />
