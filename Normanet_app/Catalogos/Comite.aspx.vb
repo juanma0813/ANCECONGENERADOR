@@ -5,8 +5,10 @@ Public Class Comite
     Inherits System.Web.UI.Page
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
-            'DeshabilitarCampos()
+
         End If
+
+        DeshabilitarCampos()
 
 
         If (rtrvComites.Nodes.Count < 1) Then
@@ -134,6 +136,7 @@ Public Class Comite
             ComiteTecnico.Bandera = "i1"
             ComiteTecnico.Insertar()
 
+            ' Revisar como meter el grupo de trabajo
             If txtGrupoTrabajo.Text = String.Empty Then
                 Dim Grupo = New Normanet_Datos.AnceSystem.clssGruposTrabajo()
                 Grupo.IdComite = rtrvComites.SelectedValue
@@ -155,7 +158,7 @@ Public Class Comite
             SubComite.Descripcion = txtdescripcion.Text
             SubComite.Bandera = "i1"
             SubComite.Insertar()
-
+            ' Revisar como meter el grupo de trabajo
             If txtGrupoTrabajo.Text = String.Empty Then
                 Dim Grupo = New Normanet_Datos.AnceSystem.clssGruposTrabajo()
                 Grupo.IdComite = rtrvComites.SelectedNode.ParentNode.Value
@@ -170,6 +173,7 @@ Public Class Comite
             End If
 
         ElseIf rtrvComites.SelectedNode.Level = 3 Then
+            ' Revisar como meter el grupo de trabajo
             If txtGrupoTrabajo.Text <> String.Empty Then
                 Dim Grupo = New Normanet_Datos.AnceSystem.clssGruposTrabajo()
 
@@ -186,17 +190,6 @@ Public Class Comite
                 Grupo.Insertar()
             End If
         End If
-        'If txtGrupoTrabajo.Text = String.Empty Then
-        '    Dim Grupo = New Normanet_Datos.AnceSystem.clssGruposTrabajo()
-        '    Grupo.IdComite =
-        '    Grupo.IdComiteTecnico =
-        '    Grupo.IdSubComite =
-        '    Grupo.IdUsuarioResponsable = cboResponsables.SelectedValue
-        '    Grupo.Objetivo = txtobjetivo.Text
-        '    Grupo.Descripcion = txtdescripcion.Text
-        '    Grupo.Bandera = "i1"
-        '    Grupo.Insertar()
-        'End If
         MsgJquery(UpdatePanel2, "Accion guardada correctamente", "..:: Borrame ::..")
     End Sub
 

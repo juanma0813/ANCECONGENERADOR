@@ -22,7 +22,7 @@
         <!----------------------------------B O T O N E R A--------------------------------------------->
         <telerik:RadToolBar ID="btnCuentas" Runat="server" Height="32" Width="100%" SkinID="SkinManager" OnClientButtonClicking="clientButtonClicking" AutoPostBack="true">  
             <Items>
-                <telerik:RadToolBarButton Enabled="true" Value="0" ImageUrl="../Imagenes/Botoneras/New.png"  Text="Nuevo" ToolTip ="Nuevo"/>
+                <telerik:RadToolBarButton Enabled="true" Value="0" ImageUrl="../Imagenes/Botoneras/New.png"  Text="Nuevo" ToolTip ="Nuevo" />
                 <telerik:RadToolBarButton Enabled="true" Value="2" ImageUrl="../Imagenes/Botoneras/Edit.png" Text="Editar" ToolTip="Editar"/>
                 <telerik:RadToolBarButton Enabled="true" Value="3" ImageUrl="../Imagenes/Botoneras/redo.png" Text="Deshacer" ToolTip="Deshacer"/>
                 <telerik:RadToolBarButton Enabled="true" Value="1" ImageUrl="../Imagenes/Botoneras/save.png" Text="Guardar" ToolTip="Guardar" ValidationGroup="PersonalInfoGroup"/>
@@ -123,18 +123,113 @@
         <telerik:RadCodeBlock ID="block" runat="server">
              <script type="text/javascript">
                  function clientButtonClicking(sender, args) {
+                     debugger
                      var toolBar = sender;
                      var button = args.get_item();
 
-                     //if (typeof (Page_ClientValidate) == 'function') { Page_ClientValidate(); }
 
-                     //switch (button.get_value()) {
-                     //    case "1":
-                     //        if (!Page_IsValid) {
-                     //            CallClientShow();
-                     //        }
-                     //        break;
-                     //}
+                     if (typeof (Page_ClientValidate) == 'function') { Page_ClientValidate(); }
+
+                     switch (button.get_value()) {
+                         case "0":
+                             ActivarDesactivarCampos()
+                             break;
+                         //case "1":
+                         //    if (!Page_IsValid) {
+                         //        CallClientShow();
+                         //    }
+                         //    break;
+                         case "3":
+                             Deshacer()
+                             break;
+                     }
+                 }
+
+                 function ActivarDesactivarCampos() {
+                     debugger
+                     var tree = $find("<%= rtrvComites.ClientID %>");
+                     if (tree.get_selectedNode() != null) {
+                         var a = tree.get_selectedNode()
+                         switch (a.get_level()) { 
+                             case 0: // Nivel Seleccione una opcion
+                                 $('#<%=txtComite.ClientID %>').removeAttr("disabled");
+                                 $('#<%=txtComite.ClientID %>').val("");
+                                 $('#<%=txtComiteTecnico.ClientID %>').attr("disabled", "disabled");
+                                 $('#<%=txtComiteTecnico.ClientID %>').val("");
+                                 $('#<%=txtSubcomite.ClientID %>').attr("disabled", "disabled");
+                                 $('#<%=txtSubcomite.ClientID %>').val("");
+                                 $('#<%=txtGrupoTrabajo.ClientID %>').attr("disabled", "disabled");
+                                 $('#<%=txtGrupoTrabajo.ClientID %>').val("");
+                                 $('#<%=txtdescripcion.ClientID %>').removeAttr("disabled");
+                                 $('#<%=txtdescripcion.ClientID %>').val("");
+                                 $('#<%=txtobjetivo.ClientID %>').removeAttr("disabled");
+                                 $('#<%=txtobjetivo.ClientID %>').val("");
+                                 $('#<%=cboResponsables.ClientID %>').removeAttr("disabled");
+                                 $('#<%=chkVisible.ClientID %>').removeAttr("disabled");
+                                 break;
+
+                             case 1: // Nivel Comite
+                                 $('#<%=txtComite.ClientID %>').attr("disabled", "disabled")
+                                 $('#<%=txtComiteTecnico.ClientID %>').removeAttr("disabled");
+                                 $('#<%=txtComiteTecnico.ClientID %>').val("");
+                                 $('#<%=txtSubcomite.ClientID %>').attr("disabled", "disabled");
+                                 $('#<%=txtSubcomite.ClientID %>').val("");
+                                 $('#<%=txtGrupoTrabajo.ClientID %>').removeAttr("disabled");
+                                 $('#<%=txtGrupoTrabajo.ClientID %>').val("");
+                                 $('#<%=txtdescripcion.ClientID %>').removeAttr("disabled");
+                                 $('#<%=txtdescripcion.ClientID %>').val("");
+                                 $('#<%=txtobjetivo.ClientID %>').removeAttr("disabled");
+                                 $('#<%=txtobjetivo.ClientID %>').val("");
+                                 $('#<%=cboResponsables.ClientID %>').removeAttr("disabled");
+                                 $('#<%=chkVisible.ClientID %>').removeAttr("disabled");
+                                 break;
+                             case 2: // Nivel Comite tecnico
+                                 $('#<%=txtComite.ClientID %>').attr("disabled", "disabled")
+                                 $('#<%=txtComiteTecnico.ClientID %>').attr("disabled", "disabled");
+                                 $('#<%=txtSubcomite.ClientID %>').removeAttr("disabled");
+                                 $('#<%=txtGrupoTrabajo.ClientID %>').removeAttr("disabled");
+                                 $('#<%=txtGrupoTrabajo.ClientID %>').val("");
+                                 $('#<%=txtdescripcion.ClientID %>').removeAttr("disabled");
+                                 $('#<%=txtdescripcion.ClientID %>').val("");
+                                 $('#<%=txtobjetivo.ClientID %>').removeAttr("disabled");
+                                 $('#<%=txtobjetivo.ClientID %>').val("");
+                                 $('#<%=cboResponsables.ClientID %>').removeAttr("disabled");
+                                 $('#<%=chkVisible.ClientID %>').removeAttr("disabled");
+                                 break;
+                             case 3: // Nivel Subcomite
+                                 $('#<%=txtComite.ClientID %>').attr("disabled", "disabled")
+                                 $('#<%=txtComiteTecnico.ClientID %>').attr("disabled", "disabled");
+                                 $('#<%=txtSubcomite.ClientID %>').attr("disabled", "disabled");
+                                 $('#<%=txtGrupoTrabajo.ClientID %>').removeAttr("disabled");
+                                 $('#<%=txtGrupoTrabajo.ClientID %>').val("");
+                                 $('#<%=txtdescripcion.ClientID %>').removeAttr("disabled");
+                                 $('#<%=txtdescripcion.ClientID %>').val("");
+                                 $('#<%=txtobjetivo.ClientID %>').removeAttr("disabled");
+                                 $('#<%=txtobjetivo.ClientID %>').val("");
+                                 $('#<%=cboResponsables.ClientID %>').removeAttr("disabled");
+                                 $('#<%=chkVisible.ClientID %>').removeAttr("disabled");
+                                 break;
+                         }
+                         //alert(a.get_parent().get_parent().get_value() );
+                     }
+                 }     
+
+                 function Deshacer() {
+                    $('#<%=txtComite.ClientID %>').removeAttr("disabled");
+                    $('#<%=txtComite.ClientID %>').val("");
+                     $('#<%=txtComiteTecnico.ClientID %>').attr("disabled", "disabled");
+                    $('#<%=txtComiteTecnico.ClientID %>').val("");
+                    $('#<%=txtSubcomite.ClientID %>').attr("disabled", "disabled");
+                    $('#<%=txtSubcomite.ClientID %>').val("");
+                    $('#<%=txtGrupoTrabajo.ClientID %>').attr("disabled", "disabled");
+                    $('#<%=txtGrupoTrabajo.ClientID %>').val("");
+                    $('#<%=txtdescripcion.ClientID %>').removeAttr("disabled");
+                    $('#<%=txtdescripcion.ClientID %>').val("");
+                    $('#<%=txtobjetivo.ClientID %>').removeAttr("disabled");
+                    $('#<%=txtobjetivo.ClientID %>').val("");
+                    $('#<%=cboResponsables.ClientID %>').removeAttr("disabled");
+                    $('#<%=chkVisible.ClientID %>').removeAttr("disabled");
+
                  }
 
                  function CallClientShow() {
