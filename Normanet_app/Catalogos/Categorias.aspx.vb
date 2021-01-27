@@ -2,6 +2,10 @@
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        ConsultarCategorias()
+        If Not IsPostBack Then
+            inactivar(btnCuentas.Items(eBtnFormularios.Editar), btnCuentas.Items(eBtnFormularios.Deshacer))
+        End If
 
     End Sub
 
@@ -12,23 +16,83 @@
     Private Sub Menu(btnValue As Integer)
         Select Case btnValue
             Case eBtnFormularios.Nuevo
+
                 BotonesNuevo()
             Case eBtnFormularios.Editar
-                AddWindow(Me.Page, "Test.aspx", "..:: Test ::.. - DemoMenuBaseMultiVentanas", 700, 550, False)
-                ScriptManager.RegisterStartupScript(Me.Page, Page.GetType, Guid.NewGuid.ToString, "", True)
+                'AddWindow(Me.Page, "Test.aspx", "..:: Test ::.. - DemoMenuBaseMultiVentanas", 700, 550, False)
+                'ScriptManager.RegisterStartupScript(Me.Page, Page.GetType, Guid.NewGuid.ToString, "", True)
+                'EditarCategoria()
+                'MsgJquery(UpdatePanel2, "Accion guardada correctamente", "..:: Borrame ::..")
+                Activar(btnCuentas.Items(eBtnFormularios.Editar), btnCuentas.Items(eBtnFormularios.Deshacer))
+                inactivar(btnCuentas.Items(eBtnFormularios.Nuevo), btnCuentas.Items(eBtnFormularios.Guardar))
             Case eBtnFormularios.Guardar
+                If txtIdCategoria.Text = "0" Then
+                    GuardarCategoria()
+                Else
+                    EditarCategoria()
+                End If
+
+
                 MsgJquery(UpdatePanel2, "Accion guardada correctamente", "..:: Borrame ::..")
             Case eBtnFormularios.Deshacer
                 lblMensaje.Text = "�Estas seguro de eliminar los datos?"
                 MsgJqueryConfirm(Me.Page, "pnlConfirm", "..:: Demo ::..", UpdatePanel3.ClientID)
-
-
+            Case eBtnFormularios.Eliminar
+                InactivarCategoria()
+            Case eBtnFormularios.Salir
         End Select
     End Sub
 
     Private Sub BotonesNuevo()
-        Activar(btnCuentas.Items(eBtnFormularios.Guardar), btnCuentas.Items(eBtnFormularios.Deshacer))
-        inactivar(btnCuentas.Items(eBtnFormularios.Nuevo), btnCuentas.Items(eBtnFormularios.Editar))
+        Activar(btnCuentas.Items(eBtnFormularios.Editar), btnCuentas.Items(eBtnFormularios.Deshacer))
+        inactivar(btnCuentas.Items(eBtnFormularios.Nuevo), btnCuentas.Items(eBtnFormularios.Guardar))
     End Sub
+
+    Private Sub ConsultarCategorias()
+
+        Dim Categoria = New Normanet_Datos.AnceSystem.clssCategorias
+        Categoria.Bandera = "s2"
+        Dim ListaCategorias = Categoria.Listar()
+
+        rddCategorias.Items.Clear()
+        For Each row As DataRow In ListaCategorias.Rows
+            Dim item As New Telerik.Web.UI.DropDownListItem
+            item.Value = row.Item("IdCategoria")
+            item.Text = row.Item("Categoria")
+            rddCategorias.Items.Add(item)
+        Next
+    End Sub
+
+    Private Sub GuardarCategoria()
+
+        Dim Categoria = New Normanet_Datos.AnceSystem.clssCategorias
+        Categoria.Categoria = txtCategoria.Text
+        Categoria.Bandera = "i1"
+        Categoria.Insertar()
+        ConsultarCategorias()
+    End Sub
+
+    Private Sub EditarCategoria()
+
+        Dim Categoria = New Normanet_Datos.AnceSystem.clssCategorias
+        Categoria.IdCategoria = txtIdCategoria.Text
+        Categoria.Categoria = txtCategoria.Text
+        Categoria.Bandera = "u1"
+        Categoria.Actualizar()
+        ConsultarCategorias()
+    End Sub
+
+    Private Sub InactivarCategoria()
+        Dim Categoria = New Normanet_Datos.AnceSystem.clssCategorias
+        Categoria.IdCategoria = rddCategorias.SelectedValue
+        Categoria.Categoria = txtCategoria.Text
+        Categoria.Bandera = "d1"
+        Categoria.Eliminar()
+        ConsultarCategorias()
+    End Sub
+
+    'Protected Sub cmdAceptar_Click(sender As Object, e As ImageClickEventArgs) Handles cmdAceptar.Click
+    '    ScriptManager.RegisterStartupScript(Me.Page, Me.Page.GetType, Guid.NewGuid.ToString, "$('#pnlConfirm').dialog('close');", True)
+    'End Sub
 
 End Class
