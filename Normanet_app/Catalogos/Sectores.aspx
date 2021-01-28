@@ -43,9 +43,10 @@
                     <telerik:RadLabel ID="RadLabel7" Text="Sector:" runat="server"></telerik:RadLabel>
                 </th>
                 <td style="text-align:left">
-                    <asp:TextBox ID="txtIdSector" runat="server"></asp:TextBox>
-                    <asp:TextBox ID="txtSector" runat="server"></asp:TextBox>
-                    <telerik:RadDropDownList ID="rddSectores" runat="server" DefaultMessage="Seleccione una opción" OnClientItemSelected="ObtenerSectorSeleccionado"></telerik:RadDropDownList>
+                    <asp:TextBox ID="txtSector" runat="server" Style="display:none"></asp:TextBox>
+                    <asp:HiddenField ID="IdSector" runat="server" />
+                    <asp:HiddenField ID="Sector" runat="server" />
+                    <telerik:RadDropDownList ID="rddSectores" runat="server" DefaultMessage="Seleccione una opción" AutoPostBack="true" OnItemSelected="rddSectores_ItemSelected" OnClientItemSelected="ObtenerSectorSeleccionado"></telerik:RadDropDownList>
                 </td>
               </tr>
                <tr>
@@ -53,7 +54,7 @@
                       <telerik:RadLabel ID="RadLabel1" Text="Activo:" runat="server"></telerik:RadLabel>
                    </th>
                     <td>
-                         <telerik:RadCheckBox ID="RadCheckBox1" runat="server"></telerik:RadCheckBox>
+                         <telerik:RadCheckBox ID="chkActivo" runat="server" Enabled="false"></telerik:RadCheckBox>
                    </td>
                </tr>
                
@@ -66,9 +67,10 @@
              <script type="text/javascript">
                  $(function () {
                      $('#<%=txtSector.ClientID %>').hide()
-                      $('#<%=txtIdSector.ClientID %>').hide()
+                     $('#<%=chkActivo.ClientID %>').attr("disabled", "disabled");
                   });
 
+                
                  function clientButtonClicking(sender, args) {
                      debugger
                      var toolBar = sender;
@@ -105,24 +107,24 @@
                  }
 
                  function nuevo() {
-                     $('#<%=txtIdSector.ClientID %>').val(0)
+                     $('#<%=IdSector.ClientID %>').val(0)
                      $('#<%=rddSectores.ClientID %>').hide()
                      $('#<%=txtSector.ClientID %>').show()
                  }
 
                  function editar() {
-                     var DropDown = $find("<%=rddSectores.ClientID%>");
 
-                     if (DropDown.get_selectedItem() !== null) {
-                         var idSeleccionado = DropDown.get_selectedItem().get_value();
-                         var textoSeleccionado = DropDown.get_selectedItem().get_text();
 
-                         $('#<%=txtIdSector.ClientID %>').val(idSeleccionado)
+                     // Se habilitan muestran/ocultan controles 
+                     var Sector = $('#<%=Sector.ClientID %>').val();
 
-                         $('#<%=rddSectores.ClientID %>').hide();
-                         $('#<%=txtSector.ClientID %>').show();
-                         $('#<%=txtSector.ClientID %>').val(textoSeleccionado);
-                     }   
+                        $('#<%=rddSectores.ClientID %>').hide();
+                        $('#<%=txtSector.ClientID %>').show();
+                     $('#<%=txtSector.ClientID %>').val(Sector);
+                     $('#<%=txtSector.ClientID %>').val(Sector);
+                     $('#<%=chkActivo.ClientID %>').hide();
+                     $('#<%=RadLabel1.ClientID %>').hide();
+                     //}
                  }
 
                  function LimpiarFormulario() {
@@ -131,9 +133,10 @@
                  }
 
                  function ObtenerSectorSeleccionado(sender, args) {
+                     debugger
                      var valor = args.get_item().get_value()
                      var txt = args.get_item().get_text()
-                     $('#<%=txtIdSector.ClientID %>').val(valor)
+                     $('#<%=IdSector.ClientID %>').val(valor)
                      $('#<%=txtSector.ClientID %>').val(txt)
                  }
              </script>

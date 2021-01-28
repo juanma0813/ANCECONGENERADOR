@@ -59,15 +59,6 @@ Partial Public Class Sectores
     Protected WithEvents RadLabel7 As Global.Telerik.Web.UI.RadLabel
 
     '''<summary>
-    '''Control txtIdSector.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txtIdSector As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''Control txtSector.
     '''</summary>
     '''<remarks>
@@ -75,6 +66,24 @@ Partial Public Class Sectores
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents txtSector As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control IdSector.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents IdSector As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''Control Sector.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Sector As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Control rddSectores.
@@ -95,13 +104,13 @@ Partial Public Class Sectores
     Protected WithEvents RadLabel1 As Global.Telerik.Web.UI.RadLabel
 
     '''<summary>
-    '''Control RadCheckBox1.
+    '''Control chkActivo.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents RadCheckBox1 As Global.Telerik.Web.UI.RadCheckBox
+    Protected WithEvents chkActivo As Global.Telerik.Web.UI.RadCheckBox
 
     '''<summary>
     '''Control block.
