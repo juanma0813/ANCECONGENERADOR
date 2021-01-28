@@ -30,7 +30,6 @@
                  <telerik:RadToolBarButton Enabled="false" Width="50px"></telerik:RadToolBarButton>
                 <telerik:RadToolBarButton Enabled="true" Value="7" ImageUrl="../Imagenes/Botoneras/delete_32.png" Text="Eliminar" ToolTip="Eliminar"/>
                 <telerik:RadToolBarButton Enabled="true" Value="15" ImageUrl="../Imagenes/Botoneras/exit.png" Text="Salir" ToolTip="Salir"/>
-                
             </Items>
         </telerik:RadToolBar>
         <!-- ------------------------------C O N T E N I D O------------------------------------------->
@@ -39,11 +38,13 @@
             <table style="width: 100%; height:100px;" class="SinBorde">
                 <tr>
                 <th>
-                    <telerik:RadLabel ID="RadLabel7" Text="Descripción:" runat="server"></telerik:RadLabel>
+                    <telerik:RadLabel ID="RadLabel7" Text="Representación:" runat="server"></telerik:RadLabel>
                 </th>
                 <td style="text-align:left">
-                    <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
-                    <telerik:RadDropDownList ID="RadDropDownList1" runat="server"></telerik:RadDropDownList>
+                    <asp:HiddenField ID="IdRepresentacion" runat="server" />
+                    <asp:HiddenField ID="Representacion" runat="server" />
+                    <asp:TextBox ID="txtRepresentacion" runat="server" ></asp:TextBox>
+                    <telerik:RadDropDownList ID="rddRepresentaciones" runat="server" DefaultMessage="Seleccione una opción" AutoPostBack="true" OnItemSelected="rddRepresentaciones_ItemSelected" OnClientItemSelected="ObtenerRepresentacionSeleccionado"></telerik:RadDropDownList>
                 </td>
               </tr>
                 <tr>
@@ -54,18 +55,18 @@
                         <table>
                             <tr>
                                 <td>
-                                    <telerik:RadLabel ID="RadLabel2" Text="Comité:" runat="server"></telerik:RadLabel>
+                                    <telerik:RadLabel ID="lblComite" Text="Comité:" runat="server"></telerik:RadLabel>
                                 </td>
                                 <th>
-                                    <telerik:RadCheckBox ID="RadCheckBox1" runat="server"></telerik:RadCheckBox>
+                                    <telerik:RadCheckBox ID="chkComite" runat="server" OnClick="chkComite_Click"></telerik:RadCheckBox>
                                 </th>
                             </tr>
                             <tr>
                                 <td>
-                                    <telerik:RadLabel ID="RadLabel3" Text="Comité Técnico:" runat="server"></telerik:RadLabel>
+                                    <telerik:RadLabel ID="lblComiteTecnico" Text="Comité Técnico:" runat="server"></telerik:RadLabel>
                                 </td>
                                 <th>
-                                    <telerik:RadCheckBox ID="RadCheckBox2" runat="server"></telerik:RadCheckBox>
+                                    <telerik:RadCheckBox ID="chkComiteTecnico" runat="server" OnClick="chkComite_Click"></telerik:RadCheckBox>
                                 </th>
                             </tr>
                         </table>
@@ -80,31 +81,105 @@
         <!-- ------------------------------------F I N------------------------------------------------->
         <telerik:RadCodeBlock ID="block" runat="server">
              <script type="text/javascript">
+                 $(function () {
+                     $('#<%=txtRepresentacion.ClientID %>').hide()
+                     
+                     $('#<%=chkComite.ClientID %>').attr("disabled", "disabled");
+                     $('#<%=chkComiteTecnico.ClientID %>').attr("disabled", "disabled");
+                     $('#<%=rddRepresentaciones.ClientID %>').show()
+                 });
+
+
                  function clientButtonClicking(sender, args) {
+                     debugger
                      var toolBar = sender;
                      var button = args.get_item();
 
                      if (typeof (Page_ClientValidate) == 'function') { Page_ClientValidate(); }
 
                      switch (button.get_value()) {
+                         case "0":
+                             nuevo()
+                             break;
+
                          case "1":
                              if (!Page_IsValid) {
                                  CallClientShow();
                              }
                              break;
+
+                         case "2":
+                             editar()
+                             break;
+
+                         case "15":
+                             debugger
+                             window.close("Catalogos/Representaciones.aspx");
+                             break;
+
                      }
+                 }
+
+                 function cambioChecked() {
+                     debugger
+                     $('#<%=rddRepresentaciones.ClientID %>').hide()
                  }
 
                  function CallClientShow() {
                      var notification = $find("<%=notCampos.ClientID%>");
-                    notification.show();
+                     notification.show();
+                 }
+
+                 function nuevo() {
+                     $('#<%=IdRepresentacion.ClientID %>').val(0)
+                     $('#<%=rddRepresentaciones.ClientID %>').hide()
+                     $('#<%=txtRepresentacion.ClientID %>').show()
+                 }
+
+                 function editar() {
+
+
+                     // Se habilitan muestran/ocultan controles 
+                     var Representacion = $('#<%=Representacion.ClientID %>').val();
+
+                     $('#<%=rddRepresentaciones.ClientID %>').hide();
+                        $('#<%=txtRepresentacion.ClientID %>').show();
+                     $('#<%=txtRepresentacion.ClientID %>').val(Representacion);
+                     $('#<%=txtRepresentacion.ClientID %>').val(Representacion);
+                     <%--$('#<%=chkComite.ClientID %>').attr("disabled", "disabled");
+                     $('#<%=chkComiteTecnico.ClientID %>').attr("disabled", "disabled");
+                     $('#<%=lblComite.ClientID %>').hide();
+                     $('#<%=lblComiteTecnico.ClientID %>').hide();--%>
+                     //}
+                 }
+
+                 function LimpiarFormulario() {
+                     $('#pnlConfirm').dialog('close');
+                     location.reload()
+                 }
+
+                 function ObtenerRepresentacionSeleccionado(sender, args) {
+                     debugger
+                     var valor = args.get_item().get_value()
+                     var txt = args.get_item().get_text()
+                     $('#<%=IdRepresentacion.ClientID %>').val(valor)
+                     $('#<%=txtRepresentacion.ClientID %>').val(txt)
+                 }
+
+                 function OnClientItemChecked(sender, eventArgs) {
+                     var items = sender.get_items();
+                     for (i = 0; i < items.get_count(); i++) {
+
+                         var item = items.getItem(i);
+                         var val = item.get_attributes().getAttribute("disabled")
+                         //if (item.get_attributes().getAttribute("disabled") === "")
+                         //    item.set_enabled(false);
+                     }
                  }
              </script>
         </telerik:RadCodeBlock>
         <div id="Validadores">
-        <%--      <asp:RequiredFieldValidator runat="server" ID="rfvNombre" ControlToValidate="txtNombre" ErrorMessage="Nombre" Display="None" ValidationGroup="PersonalInfoGroup" />
-          <asp:RequiredFieldValidator runat="server" ID="rfvEmpresa" ControlToValidate="txtEmpresa" ErrorMessage="Empresa" Display="None" ValidationGroup="PersonalInfoGroup" />
-            <asp:RequiredFieldValidator runat="server" ID="rfvCorreo" ControlToValidate="txtCorreo" ErrorMessage="Correo" Display="None" ValidationGroup="PersonalInfoGroup" />--%>
+            <asp:RequiredFieldValidator runat="server" ID="rfvRepresentacion" ControlToValidate="txtRepresentacion" ErrorMessage="Representación" Display="None" ValidationGroup="PersonalInfoGroup" />
         </div>
         <telerik:RadNotification ID="notCampos" runat="server" Animation="Fade" ContentIcon="warning" EnableRoundedCorners="True" EnableShadow="True" Position="Center" SkinID="SkinManager" Title="Problemas con campos" TitleIcon="warning" Width="261px" AutoCloseDelay="6000">
             <ContentTemplate>

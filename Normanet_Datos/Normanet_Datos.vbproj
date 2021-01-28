@@ -74,6 +74,7 @@
     <Compile Include="clssComites.vb" />
     <Compile Include="clssComitesTecnicos.vb" />
     <Compile Include="clssGruposTrabajo.vb" />
+    <Compile Include="clssRepresentaciones.vb" />
     <Compile Include="clssSectores.vb" />
     <Compile Include="clssSubComites.vb" />
     <Compile Include="clssuvwEmpleados.vb" />
